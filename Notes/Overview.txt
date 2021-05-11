@@ -1,0 +1,37 @@
+React JS
+
+
+React:
+	1. Is a User Interface Library
+		* Creates websites/applications
+	2. Has a component architecture
+		* Components which fill small roles
+	3. One way Data Flow in React
+	4. Component State
+		* Manages state changes at a component level
+		* Works well with the Data Flow
+
+React is an agnostic user interface library.  Does not care what it will ultimately display.
+
+We will focus on React in the browser, so we will use the companion library ReactDOM for this.
+
+Typical React architecture has one main component, with the rest nested along the way.
+
+                           <App />
+                              |
+             ----------------------------------
+             |                |               |
+         <Header />      <Content />      <Footer />
+             |                                |
+     ---------------                  -----------------
+     |             |                  |               |
+<SiteInfo />   <MainNav />      <Copyright />   <FooterNav />
+
+
+Data flows down one way in a React app.  
+Example: API call gets data for a User (in App) which is passed downwards to the specified component Content as "parameters" or "props" so that Content may use this data.
+
+When a component has to update data, for instance something happens in MainNav, etc, and new data needs to be fetched, then MainNav can trigger App to go back and fetch new data and automatically pass it back down.  This eliminates two-way data binding.
+
+This example however incorrectly implies a global state.
+State exists at a component level and is passed down.  So if Header gets some data, it will only pass this data down to SiteInfo and MainNav.

@@ -1,0 +1,27 @@
+Getting started can be the most daunting part of getting into web dev, especially with newer frameworks and paradigms if you've spent years with pure JavaScript, HTML, and CSS.
+
+Here is one way in order to begin development with a lightweight dev server. 
+
+Download npm (node package manager).  On Ubuntu/Debian: 
+sudo apt-get install npm -y
+
+There is no need to install the npm package create-react-app as it comes with npx, and npx comes with npm versions 5.2+.  If you accidentally install create-react-app globally, go ahead and remove it with:
+sudo npm uninstall -g create-react-app.
+
+So now we run the following command:
+sudo npx create-react-app my-app
+
+create-react-app will install:
+Development Server
+Webpack (for bundling our files)
+Babel (for compiling our JavaScript code)
++ more tools
+
+After having created your project (you can name it something other than my-app), you can start the server with:
+cd my-app
+sudo npm start
+
+This will search for src/App.js and run the server.  By default this server is visible at port 3000, so in your browser of choice you can view its contents at localhost:3000.
+
+
+
