@@ -1,1 +1,17 @@
 This is our truly first edited React app! 
+
+Let's delete all the files in the src folder in order to start from scratch :P
+
+Now lets edit a src/index.js.
+
+We have a '  const element = <h1>Hello World!</h1>;  '.  Because of the JSX, we have to have '  import React from 'react';  ' so that Babel can turn this into a React.createElement call.
+
+React works great transferring data from the compiled code into the running code, and what will happen is that the running application will get updated by React after a save occurs.  React will compare the new React elements to the old and figure out what has changed, updating on the fly.
+
+element is a React element which exists in the Virtual DOM.  We import ReactDOM and now we can render it to the real DOM:
+
+  ReactDOM.render(element,document.getElementById('root'));
+
+The first parameter is what we want to render, and the second is where we want to render it in the real DOM.
+
+Now after we save
