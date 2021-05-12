@@ -1,0 +1,12 @@
+In our editor (VS Code recommended) we can see that we have a src code folder and a public folder.
+
+Src is our React source code.
+Public is our public facing documents and files such as index.html.
+
+We can see when we view public/index.html (the homepage) we can see the following div:
+<div id="root"></div>
+
+This div is where the React app appears. It is the container for the React application.
+
+The App component is responsible for rendering the black portion with the React icon in the browser.
+

@@ -1,0 +1,59 @@
+React uses ES6 JavaScript which is translated through Babel compiler to "normal" browser understood language.
+
+Babel is a great tool which is testable at babeljs.io/repl.  It compiles JSX down to React.createElement() calls.
+Let's visit this link and test some stuff.
+
+Left pane input (simple variable declaration):
+
+  const element = <h1>Hello World</h1>;
+
+Right pane output:
+
+  "use strict";
+
+  var element = React.createElement(
+    "h1",
+    null,
+    "Hello World"
+  );
+
+JSX is a syntax extension to JavaScript; ReactJS.org recommends using it with React to describe what the UI should look like.  JSX isn't necessary but it is very helpful as a visual aid when working with UI inside JavaScript code.  In addition, it allows React to produce more useful warning and error messages.
+
+For instance JSX can be used here:
+
+  const name = 'Chloe J';
+  const element = <h1>Hello, {name}</h1>;
+
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+
+You can put any valid JavaScript expression inside the { }.  2 + 2, user.firstName, or a function call ( fooBar() ) are valid.  Lets explore that here:
+
+  function formatName(user) {
+    return user.firstName + ' ' + user.lastName;
+  }
+
+  const user = {
+    firstName: 'Chloe',
+    lastName: 'J'
+  };
+
+  const element = (
+    <h1>
+      Hello, {formatName(user)}!
+    </h1>
+  );
+
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+
+
+Since JSX is closer to JavaScript than to HTML, React DOM uses camelCase property naming convention instead of HTML attribute names.  We can see this in first-react-app's App.js, where the class container has className="App".
+
+Security:  Because React DOM escapes any values embedded within JSX before rendering, you can't inject anything that's not explicitly written in your application.  This prevents XSS attacks.
+
+
