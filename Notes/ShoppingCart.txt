@@ -1,8 +1,9 @@
 We will be building the pattern behind a shopping cart
 
 Lets install Bootstrap in VS Code to give our apps a modern look and feel.
+
 To install:
-sudo npm i bootstrap
+  sudo npm i bootstrap
 
 Add a src/components folder.  By convention our components will go here.
 Add a src/components/counter.jsx .  Remember that we camelCase these jsx files.
@@ -17,7 +18,7 @@ Now when we embed more information in our Counter return call, we must pay atten
 
 Rendering classes dynamically can be done by using { } and a function to decide the class to render.  This is easily done by using string operations and conditionals.
 
-Rendering arrays dynamically using { this.state.items.map(item => <li key={tag}>{ item }</li>) } .  We must use key={ } with a unique id.  In this example they are unique, but our array might be of objects that have unique id's.  
+Rendering arrays dynamically using the list item tag like: { this.state.items.map(item => <li key={tag}>{ item }</li>) } .  We must use key={ } with a unique id.  In this example they are unique, but our array might be of objects that have unique id's.  
 
 In JavaScript because you can apply the logical "and" to non boolean values, you can have an expression like:
 
@@ -108,4 +109,3 @@ This gives "Counter #1" and so on.
 Props includes data we give to a component, whereas state includes data that is local/private to the component.  Thus the one way data flow is seen and realized here.
 
 *NOTE* React does NOT allow you to edit the input properties on a component.  To do this, we must use state, and deal with state when "updating" information.  Thus, we get the axiom that the component that owns the piece of the state, should be the one modifying it.
-

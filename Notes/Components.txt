@@ -1,1 +1,8 @@
-React is a tree of components.
+React has a tree of components.
+
+Props (this.props) includes data we give to a component, whereas state includes data that is local/private to the component.  Thus the one way data flow is seen and realized here.
+
+*NOTE* React does NOT allow you to edit the input properties on a component.  To do this, we must use state, and deal with state when "updating" information.  Thus, w
+e get the axiom that the component that owns the piece of the state, should be the
+one modifying it.
+
