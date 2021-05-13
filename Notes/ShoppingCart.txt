@@ -1,0 +1,111 @@
+We will be building the pattern behind a shopping cart
+
+Lets install Bootstrap in VS Code to give our apps a modern look and feel.
+To install:
+sudo npm i bootstrap
+
+Add a src/components folder.  By convention our components will go here.
+Add a src/components/counter.jsx .  Remember that we camelCase these jsx files.
+
+Using the Simple React Snippets VS Code extension we already set up, we can use the shortcut "imrc" and then "cc" to get our file set up easily.  
+
+TIP:  In VS Code, you can get out of double cursor mode by pressing ESC.
+
+Now we can add some code to our Counter component, import it into index.js, and then pass it in the render call.
+
+Now when we embed more information in our Counter return call, we must pay attention to JSX rules; all JSX expressions require one parent element.  To get around this, we can surround our JSX with <div></div>, or more cleanly, use <React.Fragment></React.Fragment>.
+
+Rendering classes dynamically can be done by using { } and a function to decide the class to render.  This is easily done by using string operations and conditionals.
+
+Rendering arrays dynamically using { this.state.items.map(item => <li key={tag}>{ item }</li>) } .  We must use key={ } with a unique id.  In this example they are unique, but our array might be of objects that have unique id's.  
+
+In JavaScript because you can apply the logical "and" to non boolean values, you can have an expression like:
+
+  {this.state.tags.length === 0 && "Please create new tag"}
+
+In this, JavaScript is evaluating the left, finding a boolean, and then evaluating the right.  An empty string is considered falsey, and a string with at least one character is considered truthy.  Thus the second term is returned from the expression giving us the result shown in the browser.
+
+To bind handlers, we need to add the following method:
+
+  constructor() {
+    super();
+    // binding here
+    this.handleIncrement = this.handleIncrement.bind(this);
+  }
+
+Now we have access to 'this' and thus state inside of our handleIncrement function.
+
+An experimental way that is cleaner to do this is by using "arrow" functions.  This way we do not have to use the constructor function.
+
+  handleIncrement = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+We use the setState function that is built-in and we can access the state we want to update by simply in the JSX using its name.  In this example we used ' count '.
+
+For passing event arguments, we can do the following:
+
+  handleIncrement = (product) => {
+    console.log(product);
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  doHandleIncrement = () => {
+    this.handleIncrement({ id: 1 });
+  };
+
+We can even go as far as to clean up our code to not have a "do" for our events, but instead:
+
+  <button
+    onClick={ () => this.handleIncrement({ id: 1 }) }
+    className="btn btn-secondary btn-sm"
+  >
+
+Here we don't have an entirely other function, we just do it inline.  This allows us to provide information about the event.
+
+Now lets move on to start building some of our React tree for this example.  First lets add a src/components/counters.jsx file.
+
+Now our component tree looks like this:
+
+                 ----------------
+                 |  components  |
+                 ----------------
+
+                     Counters
+                        |
+                        V
+                     Counter
+
+In order to pass data to components, we can use the builtin "this.props" object.  In Counters, we can have:
+
+  <Counter key={counter.id} value={counter.value} whatever={thing} />
+
+Meanwhile in Counter:
+
+  state = {
+    value: this.props.value
+  };
+
+To specify children (a React element) we can expand the Counter tag and have something of this form:
+
+  <Counter key=.....   >
+    <h4>Title</h4>
+  </Counter>
+
+We can render this in Counter by simply having:
+
+  <div>
+    {this.props.children}
+    <span .........
+    <button ......
+  </div>
+
+We can make this "Title" dynamically using JSX:
+
+  <h4>Counter #{counter.id}</h4>
+
+This gives "Counter #1" and so on.
+Props includes data we give to a component, whereas state includes data that is local/private to the component.  Thus the one way data flow is seen and realized here.
+
+*NOTE* React does NOT allow you to edit the input properties on a component.  To do this, we must use state, and deal with state when "updating" information.  Thus, we get the axiom that the component that owns the piece of the state, should be the one modifying it.
+

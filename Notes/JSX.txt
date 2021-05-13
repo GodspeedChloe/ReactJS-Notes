@@ -55,5 +55,3 @@ You can put any valid JavaScript expression inside the { }.  2 + 2, user.firstNa
 Since JSX is closer to JavaScript than to HTML, React DOM uses camelCase property naming convention instead of HTML attribute names.  We can see this in first-react-app's App.js, where the class container has className="App".
 
 Security:  Because React DOM escapes any values embedded within JSX before rendering, you can't inject anything that's not explicitly written in your application.  This prevents XSS attacks.
-
-
