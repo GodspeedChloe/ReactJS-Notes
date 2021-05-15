@@ -109,3 +109,79 @@ This gives "Counter #1" and so on.
 Props includes data we give to a component, whereas state includes data that is local/private to the component.  Thus the one way data flow is seen and realized here.
 
 *NOTE* React does NOT allow you to edit the input properties on a component.  To do this, we must use state, and deal with state when "updating" information.  Thus, we get the axiom that the component that owns the piece of the state, should be the one modifying it.
+
+
+Okay, now for deletion of an item we want to remember a few things:
+  - We have a map between the counters state and the counters children.  Changing the state will change the children
+  - We want to use setState only when we are updating the component's state
+  - We want the parent to be the one deleting the child
+
+So we give the child a property called onDelete which equals a function ref in the parent for handleDelete.  Then, in handleDelete, we will take a specific parameter id, and create a new array using the array filter method.  It'll look like this:
+
+  handleDelete = (counterId) => {
+    const counters = this.props.counters.filter((c) => c.id !== counterId);
+    this.setState({ counters });
+  };
+
+We can even clean up our child creation so that we don't have to deal with messiness (think if we had lots of props we wanted to give our child) so instead we can simply have this:
+
+  <Counter
+    key={counter.id}
+    counter={counter}
+    onDelete={this.handleDelete}
+  />
+
+We have a problem in our implementation however, we do no have a single source of truth.  If we update value in our Counters component, it isn't updated within Counter's state.  So we need to remove value from Counter's state.
+
+So we need to refactor our increment method to instead raise an event that is handled in the parent :)
+
+Then, our implementation of handleIncrement will look like this:
+
+  handleIncrement = (counter) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value++;
+    this.setState({ counters });
+  };
+
+So passing in the counter object is a TON cleaner than passing an id, because then we have to search and return the object with that id instead of leveraging the builtin indexOf method.  This should be the way usually.  For deletion, we can even pass the counter object and then filter based on its id.  
+
+Now lets add a Nav bar.  This requires changing the component structure to something which will look like this:
+
+               App
+                |
+       -------------------
+       |                 |
+     NavBar           Counters
+                         |
+                         |
+                         |
+                      Counter
+
+Our NavBar has no state or functions, so we can convert it to a "Stateless Functional Component".  To do this we simply do the following for SFC's:
+
+  import React from "react";
+
+  const NavBar = () => {
+    ...
+  };
+
+  export default NavBar;
+
+To pass information to this component, we can do what we've always done with arrow functions, but if we use Object Destructuring, we can clean our code.  This is especially helpful if we're only interested in one or two things from the object.  This is done with the following declaration:
+
+  const NavBar = ({ totalCounters }) => {
+    return (
+      <nav className="navbar navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          Navbar{" "}
+          <span className="badge bg-pill bg-secondary">
+            {totalCounters}
+          </span>
+        </a>
+      </nav>
+    );
+  }
+
+

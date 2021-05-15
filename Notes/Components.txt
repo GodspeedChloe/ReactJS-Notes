@@ -6,3 +6,30 @@ Props (this.props) includes data we give to a component, whereas state includes 
 e get the axiom that the component that owns the piece of the state, should be the
 one modifying it.
 
+For something like deletion, we give the child a property which is a function reference in the parent.  This call flows upwards and looks like this in the child:
+
+  <button
+    onClick={() => this.props.onDelete(this.props.id)}
+    ....
+  >
+    Delete
+  </button>
+
+In the parent we initialize the child component with a prop onDelete which is a function reference to a function in the parent.
+
+  <Counter key={counter.id} id={counter.id} value={counter.value} onDelete={this.handleDelete} />
+
+Visually it looks like this:
+
+
+
+          ------------
+          | Counters |  handleDelete()
+          ------------
+               ^
+               |
+          ------------
+          | Counter  |  onDelete
+          ------------
+
+
