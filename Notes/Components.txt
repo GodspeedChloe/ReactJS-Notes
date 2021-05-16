@@ -33,3 +33,52 @@ Visually it looks like this:
           ------------
 
 
+In React, we have component lifecycles.  These have lifecycle hooks and are broken down as follows:
+
+        Mount                    Update                    Unmount
+---------------------    ----------------------    ------------------------
+|    constructor    |    |                    |    |                      |
+|      render       |    |       render       |    |                      |
+| componentDidMount |    | componentDidUpdate |    | componentWillUnmount |
+---------------------    ----------------------    ------------------------
+
+
+The mounting phase is interesting because we use a constructor which is called once during lifecycle.  An empty constructor looks like this:
+
+  constructor() {
+    super();
+  }
+
+If we wanted to initialize with a particular state, we can do so here, but because there hasn't been a state for the componenet, we edit the state directly without using setState.  This is how we do that:
+
+  constructor(props) {
+    super(props); // note this
+    this.state = this.props.something;
+  }
+
+If we wanted to interface with the server to get date, this can be done in the componentDidMount hook like so:
+
+  componentDidMount() {
+    // Ajax call to get data
+    this.setState({ movies });
+  }
+
+We also render components recursively, which gives us the following log if we log in the console upon rendering:
+
+  App - rendered
+  NavBar - rendered
+  Counters - rendered
+  Counter - Rendered   (4)
+
+The update phase happens whenever the state or the props of a component change.  After we click increment in our shopping cart example, we will see all the components rendered again.  However, only the affected components will be updated in the DOM.
+
+We can track our changes in state and props in order to decide to perhaps do something server based, etc, like so:
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.counter.value !== this.props.counter.value) {
+      // Ajax call and get new data from server
+    }
+  }
+
+Now in our Unmount phase, we can use the componentWillUnmount hook to do cleanup.  This is how we avoid memory leaks.
+
